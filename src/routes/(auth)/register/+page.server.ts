@@ -15,9 +15,8 @@ export const actions: Actions = {
 		const username = form.get('username')
 		const password = form.get('password')
 
-		// check for empty values
 		if (typeof username !== 'string' || typeof password !== 'string') {
-			return fail(400)
+			return fail(400, {message: 'Invalid form data, values cannot be empty'})
 		}
 
 		try {
@@ -34,8 +33,7 @@ export const actions: Actions = {
 			const session = await auth.createSession(user.userId)
 			locals.setSession(session)
 		} catch {
-			// username already in use
-			return fail(400)
+			return fail(400, { message: 'Username already in use' })
 		}
 	},
 }
